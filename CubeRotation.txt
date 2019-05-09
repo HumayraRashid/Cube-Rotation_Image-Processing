@@ -1,0 +1,135 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cuberotation;
+import javax.media.opengl.GL2;
+import javax.media.opengl.GLAutoDrawable;
+import javax.media.opengl.GLCapabilities;
+import javax.media.opengl.GLEventListener;
+import javax.media.opengl.GLProfile;
+import javax.media.opengl.awt.GLCanvas;
+import javax.swing.JFrame;
+/**
+ *
+ * @author humayrabushra
+ */
+public class CubeRotation implements GLEventListener{
+
+    /**
+     * @param args the command line arguments
+     */
+    static GLProfile profile = GLProfile.get(GLProfile.GL2);
+    static GLCapabilities capabilities = new GLCapabilities(profile);
+    // The canvas 
+    static GLCanvas glcanvas = new GLCanvas(capabilities);
+    static GL2 gl = null;
+    int deg=45;
+    public static void main(String[] args) {
+        //getting the capabilities object of GL2 profile
+
+        CubeRotation l = new CubeRotation();
+        //creating frame
+        glcanvas.addGLEventListener(l);
+        glcanvas.setSize(800, 800);
+
+        final JFrame frame = new JFrame("Cube Rotation 45D");
+        //adding canvas to frame
+        frame.getContentPane().add(glcanvas);
+        frame.setSize(frame.getContentPane().getPreferredSize());
+        frame.setVisible(true);
+
+    }
+
+    public void display(GLAutoDrawable drawable) {
+        gl = drawable.getGL().getGL2();
+        gl.glBegin(GL2.GL_LINES);//static field
+        gl.glColor3f(0.77f,0.23f,0.64f);
+        
+        gl.glVertex2d(-0.2f, 0.2f);
+        gl.glVertex2d(0.2f, 0.2f);
+        gl.glVertex2d(-0.2f, 0.2f);
+        gl.glVertex2d(-0.2f, -0.2f);
+        gl.glVertex2d(-0.2f, -0.2f);
+        gl.glVertex2d(0.2f, -0.2f);
+        gl.glVertex2d(0.2f, -0.2f);
+        gl.glVertex2d(0.2f, 0.2f);
+        
+        gl.glVertex2d(-0.2f, 0.2f);
+        gl.glVertex2d(-0.4f, 0.4f);
+        gl.glVertex2d(-0.4f, 0.0f);
+        gl.glVertex2d(-0.2f, -0.2f);
+        gl.glVertex2d(0.0f, 0.0f);
+        gl.glVertex2d(0.2f, -0.2f);
+        gl.glVertex2d(0.0f, 0.4f);
+        gl.glVertex2d(0.2f, 0.2f);
+        
+        gl.glVertex2d(-0.4f, 0.0f);
+        gl.glVertex2d(-0.4f, 0.4f);
+        gl.glVertex2d(-0.4f, 0.0f);
+        gl.glVertex2d(0.0f, 0.0f);
+        gl.glVertex2d(0.0f, 0.0f);
+        gl.glVertex2d(0.0f, 0.4f);
+        gl.glVertex2d(0.0f, 0.4f);
+        gl.glVertex2d(-0.4f, 0.4f);
+        
+        //ROTATED CUBE
+       
+        gl.glColor3f(0.23f,0.64f,0.77f);
+        gl.glVertex2d(rotateX(-0.2f, 0.2f), rotateY(-0.2f, 0.2f));
+        gl.glVertex2d(rotateX(0.2f, 0.2f), rotateY(0.2f, 0.2f));
+        gl.glVertex2d(rotateX(-0.2f, 0.2f), rotateY(-0.2f, 0.2f));
+        gl.glVertex2d(rotateX(-0.2f, -0.2f), rotateY(-0.2f, -0.2f));
+        gl.glVertex2d(rotateX(-0.2f, -0.2f), rotateY(-0.2f, -0.2f));
+        gl.glVertex2d(rotateX(0.2f, -0.2f), rotateY(0.2f, -0.2f));
+        gl.glVertex2d(rotateX(0.2f, -0.2f), rotateY(0.2f, -0.2f));
+        gl.glVertex2d(rotateX(0.2f, 0.2f), rotateY(0.2f, 0.2f));
+        
+        gl.glVertex2d(rotateX(-0.2f, 0.2f), rotateY(-0.2f, 0.2f));
+        gl.glVertex2d(rotateX(-0.4f, 0.4f), rotateY(-0.4f, 0.4f));
+        gl.glVertex2d(rotateX(-0.4f, 0.0f), rotateY(-0.4f, 0.0f));
+        gl.glVertex2d(rotateX(-0.2f, -0.2f), rotateY(-0.2f, -0.2f));
+        gl.glVertex2d(rotateX(0.0f, 0.0f), rotateY(0.0f, 0.0f));
+        gl.glVertex2d(rotateX(0.2f, -0.2f), rotateY(0.2f, -0.2f));
+        gl.glVertex2d(rotateX(0.0f, 0.4f), rotateY(0.0f, 0.4f));
+        gl.glVertex2d(rotateX(0.2f, 0.2f), rotateY(0.2f, 0.2f));
+        
+        gl.glVertex2d(rotateX(-0.4f, 0.0f), rotateY(-0.4f, 0.0f));
+        gl.glVertex2d(rotateX(-0.4f, 0.4f), rotateY(-0.4f, 0.4f));
+        gl.glVertex2d(rotateX(-0.4f, 0.0f), rotateY(-0.4f, 0.0f));
+        gl.glVertex2d(rotateX(0.0f, 0.0f), rotateY(0.0f, 0.0f));
+        gl.glVertex2d(rotateX(0.0f, 0.0f), rotateY(0.0f, 0.0f));
+        gl.glVertex2d(rotateX(0.0f, 0.4f), rotateY(0.0f, 0.4f));
+        gl.glVertex2d(rotateX(0.0f, 0.4f), rotateY(0.0f, 0.4f));
+        gl.glVertex2d(rotateX(-0.4f, 0.4f), rotateY(-0.4f, 0.4f));
+        
+        gl.glEnd();
+
+        
+        
+    }
+
+    public double rotateX(double x, double y) {
+        return (x * Math.cos(Math.toRadians(deg)) - y * Math.sin(Math.toRadians(deg)));
+    }
+
+    public double rotateY(double x, double y) {
+        return (x * Math.sin(Math.toRadians(deg)) + y * Math.cos(Math.toRadians(deg)));
+    }
+    
+    public void dispose(GLAutoDrawable arg0) {
+        //method body
+    }
+
+    public void init(GLAutoDrawable drawable) {
+        // method body
+        //4. drive the display() in a loop
+    }
+
+    public void reshape(GLAutoDrawable arg0, int arg1, int arg2, int arg3, int arg4) {
+        // method body
+    }
+    //end of main
+    
+}
